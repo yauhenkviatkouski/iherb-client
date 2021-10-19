@@ -1,1 +1,36 @@
-<p>register works!</p>
+<h1>Регистрация</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-error *ngIf="form.hasError('required')">
+    Please enter valid data
+  </mat-error>
+  <fieldset class="form-wrapper">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Instagram</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="instagramName"
+        formControlName="login"
+      />
+      <span matPrefix>@</span>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        placeholder="email@mail.com"
+        formControlName="email"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Repeat Password</mat-label>
+      <input type="password" matInput formControlName="passwordConfirm" />
+    </mat-form-field>
+    <button mat-button color="primary" type="submit">Register</button>
+  </fieldset>
+</form>
