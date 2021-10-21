@@ -4,7 +4,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../shared/material/material.module';
+import { MaterialModule } from '../shared/modules/material/material.module';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/reducers';
 
 const routes: Routes = [
   {
@@ -20,6 +22,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MaterialModule,
     ReactiveFormsModule,
+    StoreModule.forFeature('auth', reducer),
   ],
 })
 export class AuthModule {}
