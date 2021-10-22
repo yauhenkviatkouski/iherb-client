@@ -6,9 +6,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { IAppState } from 'src/app/shared/types/appState.interface';
+import { AuthService } from '../../services/auth.service';
 import { ActionTypes } from '../../store/actionTypes';
 import { registerAction } from '../../store/register.action';
+import { isSubmittingSelector } from '../../store/selectors';
 
 @Component({
   selector: 'app-register',
@@ -17,13 +21,26 @@ import { registerAction } from '../../store/register.action';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+  isSubmitting$: Observable<boolean>;
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<IAppState>,
+    private authService: AuthService,
+  ) {}
 
   // loginFormControl = new FormControl('', [Validators.required]);
 
   ngOnInit(): void {
     this.initializeForm();
+    this.initializeValues();
+  }
+
+  initializeValues(): void {
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+    this.isSubmitting$.subscribe((...a) =>
+      console.log('agrs from subscribe', a),
+    );
   }
 
   initializeForm(): void {
@@ -67,5 +84,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.store.dispatch(registerAction(this.form.value));
+    this.authService.register(this.form.value).subscribe((currentUser) => {
+      console.log('currentUser', currentUser);
+    });
   }
 }

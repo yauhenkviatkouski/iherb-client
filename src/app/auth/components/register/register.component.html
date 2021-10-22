@@ -31,7 +31,12 @@
       <mat-label>Repeat Password</mat-label>
       <input type="password" matInput formControlName="passwordConfirm" />
     </mat-form-field>
-    <button [disabled]="!form.valid" mat-button color="primary" type="submit">
+    <button
+      [disabled]="!form.valid || (isSubmitting$ | async)"
+      mat-button
+      color="primary"
+      type="submit"
+    >
       Register
     </button>
   </fieldset>
