@@ -79,13 +79,9 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.form);
     if (!this.form.valid) {
       return;
     }
-    this.store.dispatch(registerAction(this.form.value));
-    this.authService.register(this.form.value).subscribe((currentUser) => {
-      console.log('currentUser', currentUser);
-    });
+    this.store.dispatch(registerAction({ request: this.form.value }));
   }
 }

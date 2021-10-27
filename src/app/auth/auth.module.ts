@@ -8,6 +8,8 @@ import { MaterialModule } from '../shared/modules/material/material.module';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/reducers';
 import { AuthService } from './services/auth.service';
+import { EffectsModule } from '@ngrx/effects';
+import { RegisterEffect } from './store/register.effects';
 
 const routes: Routes = [
   {
@@ -24,6 +26,7 @@ const routes: Routes = [
     MaterialModule,
     ReactiveFormsModule,
     StoreModule.forFeature('auth', reducer),
+    EffectsModule.forFeature([RegisterEffect]),
   ],
   providers: [AuthService],
 })
