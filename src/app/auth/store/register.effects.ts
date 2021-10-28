@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -24,7 +25,9 @@ export class RegisterEffect {
             ),
           ),
       ),
-      catchError(() => of(registerFailureAction())),
+      catchError((errorResponse: HttpErrorResponse) =>
+        of(registerFailureAction(errorResponse.error.errors)),
+      ),
     ),
   );
 

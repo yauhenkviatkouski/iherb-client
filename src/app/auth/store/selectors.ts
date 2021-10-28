@@ -8,5 +8,10 @@ export const authFeatureSelector = createFeatureSelector<IAppState, IAuthState>(
 
 export const isSubmittingSelector = createSelector(
   authFeatureSelector,
-  (authState) => authState.isSubmitting,
+  (authState: IAuthState) => authState.isSubmitting,
+);
+
+export const apiErrorsSelector = createSelector(
+  authFeatureSelector,
+  (authState: IAuthState) => authState.errors,
 );

@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 import { ICurrentUser } from 'src/app/shared/types/currentUser.interface';
 import { IRegisterRequest } from '../types/registerRequest.interface';
 import { ActionTypes } from './actionTypes';
@@ -13,4 +14,7 @@ export const registerSuccessAction = createAction(
   props<{ currentUser: ICurrentUser }>(),
 );
 
-export const registerFailureAction = createAction(ActionTypes.REGISTER_FAILURE);
+export const registerFailureAction = createAction(
+  ActionTypes.REGISTER_FAILURE,
+  props<{ errors: IApiErrors }>(),
+);

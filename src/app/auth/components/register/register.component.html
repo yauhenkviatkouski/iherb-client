@@ -2,6 +2,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-error *ngIf="form.hasError('required')">
     Please enter valid data
+    <!-- <app-api-error-messages
+      *ngIf="apiErrors$ | async"
+      [apiErrors]="apiErrors$ | async"
+    ></app-api-error-messages> -->
   </mat-error>
   <fieldset class="form-wrapper">
     <mat-form-field class="example-full-width" appearance="fill">

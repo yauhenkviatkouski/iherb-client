@@ -8,11 +8,12 @@ import {
 } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 import { IAppState } from 'src/app/shared/types/appState.interface';
 import { AuthService } from '../../services/auth.service';
 import { ActionTypes } from '../../store/actionTypes';
 import { registerAction } from '../../store/register.action';
-import { isSubmittingSelector } from '../../store/selectors';
+import { apiErrorsSelector, isSubmittingSelector } from '../../store/selectors';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +23,7 @@ import { isSubmittingSelector } from '../../store/selectors';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   isSubmitting$: Observable<boolean>;
+  apiErrors$: Observable<IApiErrors | null>;
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +40,7 @@ export class RegisterComponent implements OnInit {
 
   initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+    this.apiErrors$ = this.store.pipe(select(apiErrorsSelector));
     this.isSubmitting$.subscribe((...a) =>
       console.log('agrs from subscribe', a),
     );
