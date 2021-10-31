@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { environment } from 'src/environments/environment';
+import { LinkParserModule } from './shared/modules/link-parser/link-parser.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     EffectsModule.forRoot([]),
     HttpClientModule,
+    LinkParserModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
