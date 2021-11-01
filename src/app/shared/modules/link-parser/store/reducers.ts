@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { ILinkParserState } from '../types/linkParserState.interfase';
+import { ILinkParserState } from '../types/linkParserState.interface';
 import {
   parseLinkAction,
   parseLinkFailureAction,

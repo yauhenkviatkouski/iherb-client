@@ -1,3 +1,3 @@
-export interface IParseLinkRequest {
+export interface ILinkParserRequest {
   link: string;
 }

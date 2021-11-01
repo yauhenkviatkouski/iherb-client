@@ -2,11 +2,11 @@ import { createAction, props } from '@ngrx/store';
 import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 import { IProduct } from '../types/product.interface';
 import { ActionTypes } from './actionTypes';
-import { IParseLinkRequest } from './parseLinkRequest.interface';
+import { ILinkParserRequest } from '../types/parseLinkRequest.interface';
 
 export const parseLinkAction = createAction(
   ActionTypes.PARSE_LINK,
-  props<{ request: IParseLinkRequest }>(),
+  props<{ request: ILinkParserRequest }>(),
 );
 
 export const parseLinkSuccessAction = createAction(

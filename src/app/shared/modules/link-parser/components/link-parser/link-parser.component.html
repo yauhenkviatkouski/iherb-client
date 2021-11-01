@@ -1,16 +1,22 @@
-<div>
-  <form>
-    <app-api-error-messages *ngIf="apiErrors$ | async">
-      [apiErrors]="apiErrors$ | async" ></app-api-error-messages
-    >
-    <mat-form-field appearance="fill">
-      <mat-label>Ссылка на корзину или товар</mat-label>
-      <input
-        type="text"
-        formControlName="link"
-        matInput
-        placeholder="https://iherb.com/..."
-      />
-    </mat-form-field>
-  </form>
+<div class="linkParserWrapper">
+  <app-api-error-messages *ngIf="apiErrors$ | async">
+    [apiErrors]="apiErrors$ | async" ></app-api-error-messages
+  >
+  <mat-form-field appearance="fill">
+    <mat-label>Ссылка на корзину или товар</mat-label>
+    <input
+      type="text"
+      [formControl]="link"
+      matInput
+      placeholder="https://iherb.com/..."
+    />
+  </mat-form-field>
+  <button
+    [disabled]="!link.valid || (isParsing$ | async)"
+    (click)="onSubmit()"
+    mat-button
+    color="primary"
+  >
+    Find
+  </button>
 </div>

@@ -10,8 +10,6 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 import { IAppState } from 'src/app/shared/types/appState.interface';
-import { AuthService } from '../../services/auth.service';
-import { ActionTypes } from '../../store/actionTypes';
 import { registerAction } from '../../store/register.action';
 import { apiErrorsSelector, isSubmittingSelector } from '../../store/selectors';
 
@@ -25,11 +23,7 @@ export class RegisterComponent implements OnInit {
   isSubmitting$: Observable<boolean>;
   apiErrors$: Observable<IApiErrors | null>;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store<IAppState>,
-    private authService: AuthService,
-  ) {}
+  constructor(private fb: FormBuilder, private store: Store<IAppState>) {}
 
   // loginFormControl = new FormControl('', [Validators.required]);
 
