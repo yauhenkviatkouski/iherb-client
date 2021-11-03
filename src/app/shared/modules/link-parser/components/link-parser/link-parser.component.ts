@@ -11,7 +11,7 @@ import { isParsingSelector } from '../../store/selectors';
 @Component({
   selector: 'app-link-parser',
   templateUrl: './link-parser.component.html',
-  styleUrls: ['./link-parser.component.sass'],
+  styleUrls: ['./link-parser.component.scss'],
 })
 export class LinkParserComponent implements OnInit {
   link: FormControl;

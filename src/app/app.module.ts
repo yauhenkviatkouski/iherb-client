@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
@@ -21,6 +22,7 @@ import { LinkParserModule } from './shared/modules/link-parser/link-parser.modul
     EffectsModule.forRoot([]),
     HttpClientModule,
     LinkParserModule,
+    MatIconModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
