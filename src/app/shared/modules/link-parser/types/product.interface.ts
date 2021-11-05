@@ -1,4 +1,9 @@
 export interface IProduct {
   name: string;
-  brand: string;
+  link: string;
+  qty?: number;
+  brand?: string;
+  regularPrice?: number;
+  superPrice?: number;
+  isNotAvailable?: boolean;
 }

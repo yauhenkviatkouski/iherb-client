@@ -4,7 +4,7 @@ import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 @Component({
   selector: 'app-api-error-messages',
   templateUrl: './api-error-messages.component.html',
-  styleUrls: ['./api-error-messages.component.sass'],
+  styleUrls: ['./api-error-messages.component.scss'],
 })
 export class ApiErrorMessagesComponent implements OnInit {
   @Input('apiErrors') apiErrorsProps: IApiErrors;

@@ -2,22 +2,30 @@
   <app-api-error-messages *ngIf="apiErrors$ | async">
     [apiErrors]="apiErrors$ | async" ></app-api-error-messages
   >
-  <mat-form-field appearance="fill">
+  <mat-form-field class="linkParser" appearance="fill">
     <mat-label>Ссылка на корзину или товар</mat-label>
     <input
+      [readonly]="(isSubmitting$ | async) || false"
       type="text"
       [formControl]="link"
       matInput
       placeholder="https://iherb.com/..."
     />
+    <mat-error>Введите корректную ссылку</mat-error>
   </mat-form-field>
+
   <button
-    [disabled]="!link.valid || (isParsing$ | async)"
+    [disabled]="(isSubmitting$ | async) || !link.valid"
     (click)="onSubmit()"
     mat-button
     color="primary"
     aria-label="search"
   >
-    <mat-icon aria-hidden="true">search</mat-icon>
+    <mat-icon *ngIf="!(isSubmitting$ | async); else spinner" aria-hidden="true"
+      >search</mat-icon
+    >
+    <ng-template #spinner
+      ><mat-spinner diameter="32"></mat-spinner
+    ></ng-template>
   </button>
 </div>

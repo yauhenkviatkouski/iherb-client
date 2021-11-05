@@ -9,7 +9,6 @@ import { LinkParserEffect } from './store/parseLink.effects';
 import { reducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { LinkParserService } from './services/linkParser.service';
-import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [LinkParserComponent],
@@ -17,7 +16,6 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     MaterialModule,
     ApiErrorMessagesModule,
-    MatIconModule,
     ReactiveFormsModule,
     StoreModule.forFeature('linkParser', reducer),
     EffectsModule.forFeature([LinkParserEffect]),

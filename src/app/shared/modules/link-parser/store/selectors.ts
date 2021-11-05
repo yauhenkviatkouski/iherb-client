@@ -7,7 +7,12 @@ export const parseLinkFeatureSelector = createFeatureSelector<
   ILinkParserState
 >('linkParser');
 
-export const isParsingSelector = createSelector(
+export const isSubmittingSelector = createSelector(
   parseLinkFeatureSelector,
   (parseLinkState: ILinkParserState) => parseLinkState.isSubmitting,
+);
+
+export const productsSelector = createSelector(
+  parseLinkFeatureSelector,
+  (parseLinkState: ILinkParserState) => parseLinkState.products,
 );

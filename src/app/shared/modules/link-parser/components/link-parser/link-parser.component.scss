@@ -1,4 +1,12 @@
 .linkParserWrapper {
-  width: 100%;
+  // width: 100%;
   display: flex;
+
+  .linkParser {
+    width: 100%;
+  }
+
+  button {
+    margin-bottom: 1.34375em;
+  }
 }
