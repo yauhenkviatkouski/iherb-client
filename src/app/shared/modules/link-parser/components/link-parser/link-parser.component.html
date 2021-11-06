@@ -32,7 +32,7 @@
       ></ng-template>
     </button>
     <button
-      [disabled]="!availableProducts"
+      [disabled]="!availableProducts.length"
       (click)="onDownloadClick()"
       mat-button
       color="primary"

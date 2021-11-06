@@ -3,9 +3,9 @@ import { ExportToCsv } from 'export-to-csv';
 
 @Injectable()
 export class UtilsService {
-  downloadCsv(rows: any, fileName: string) {
+  downloadCsv(rows: any, filename: string) {
     const options = {
-      fileName: fileName,
+      filename,
       fieldSeparator: ',',
       quoteStrings: '"',
       decimalSeparator: '.',

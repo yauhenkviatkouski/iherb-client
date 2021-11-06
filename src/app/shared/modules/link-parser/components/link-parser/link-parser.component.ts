@@ -34,10 +34,10 @@ export class LinkParserComponent implements OnInit {
   }
 
   initializeForm(): void {
-    this.link = new FormControl(
-      'https://ru.iherb.com/tr/cb?pcodes=BLB-00926qty1_NOW-00992qty2_NFS-01242qty1_SNS-02028qty1_NFS-04516qty1_SOR-01660qty1_SPS-90860qty1_CAL-57109qty1_CEN-22662qty1_CAL-86331qty1_CGN-01299qty1_NFS-01249qty2_NFS-01252qty2_CGN-01066qty1&rcode=DBB337',
-      [Validators.required, Validators.pattern(/.+iherb.com/)],
-    );
+    this.link = new FormControl('', [
+      Validators.required,
+      Validators.pattern(/.+iherb.com/),
+    ]);
   }
 
   initializeValues(): void {
