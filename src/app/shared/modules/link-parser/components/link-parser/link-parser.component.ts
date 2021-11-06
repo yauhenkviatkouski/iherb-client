@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { apiErrorsSelector } from 'src/app/auth/store/selectors';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 import { IAppState } from 'src/app/shared/types/appState.interface';
 import { parseLinkAction } from '../../store/parseLink.action';
@@ -25,7 +26,7 @@ export class LinkParserComponent implements OnInit {
   isSubmitting$: Observable<boolean>;
   products$: Observable<IProduct[]>;
 
-  constructor(private store: Store<IAppState>) {}
+  constructor(private store: Store<IAppState>, private utils: UtilsService) {}
 
   ngOnInit(): void {
     this.initializeValues();
@@ -66,6 +67,20 @@ export class LinkParserComponent implements OnInit {
   onSubmit(): void {
     this.store.dispatch(
       parseLinkAction({ request: { link: this.link.value } }),
+    );
+  }
+
+  onDownloadClick(): void {
+    this.utils.downloadCsv(
+      this.availableProducts.map((product) => ({
+        brand: product.brand,
+        name: product.name.trim(),
+        qty: product.qty,
+        weight: product.weight,
+        regularPrice: product.regularPrice! / 100,
+        superPrice: product.superPrice ? product.superPrice / 100 : '',
+      })),
+      'orders',
     );
   }
 }

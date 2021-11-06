@@ -31,6 +31,15 @@
         ><mat-spinner diameter="32"></mat-spinner
       ></ng-template>
     </button>
+    <button
+      [disabled]="!availableProducts"
+      (click)="onDownloadClick()"
+      mat-button
+      color="primary"
+      aria-label="search"
+    >
+      <mat-icon aria-hidden="true">download</mat-icon>
+    </button>
   </div>
 
   <table
@@ -95,7 +104,7 @@
   </table>
 
   <ng-container *ngIf="unavailableProducts?.length">
-    <p>Позиции, не доступные для заказа:</p>
+    <p><b>Внимание:</b> следующие позиции не доступны для заказа:</p>
     <table mat-table [dataSource]="unavailableProducts">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Продукт</th>

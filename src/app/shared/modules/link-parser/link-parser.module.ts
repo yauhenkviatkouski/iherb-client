@@ -9,6 +9,7 @@ import { LinkParserEffect } from './store/parseLink.effects';
 import { reducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { LinkParserService } from './services/linkParser.service';
+import { UtilsService } from '../../services/utils.service';
 
 @NgModule({
   declarations: [LinkParserComponent],
@@ -21,6 +22,6 @@ import { LinkParserService } from './services/linkParser.service';
     EffectsModule.forFeature([LinkParserEffect]),
   ],
   exports: [LinkParserComponent],
-  providers: [LinkParserService],
+  providers: [LinkParserService, UtilsService],
 })
 export class LinkParserModule {}
