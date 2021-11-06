@@ -16,9 +16,14 @@ import { IProduct } from '../../types/product.interface';
 })
 export class LinkParserComponent implements OnInit {
   link: FormControl;
+  displayedAvailableTableColumns: string[];
+  displayedUnavailableTableColumns: string[];
+  availableProducts: IProduct[];
+  unavailableProducts: IProduct[];
+
   apiErrors$: Observable<IApiErrors | null>;
   isSubmitting$: Observable<boolean>;
-  products$: Observable<IProduct[] | null>;
+  products$: Observable<IProduct[]>;
 
   constructor(private store: Store<IAppState>) {}
 
@@ -38,6 +43,24 @@ export class LinkParserComponent implements OnInit {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
     this.apiErrors$ = this.store.pipe(select(apiErrorsSelector));
     this.products$ = this.store.pipe(select(productsSelector));
+    this.products$.subscribe((products) => {
+      this.availableProducts = products.filter(
+        (product) => !product.isNotAvailable,
+      );
+      this.unavailableProducts = products.filter(
+        (product) => product.isNotAvailable,
+      );
+    });
+    this.displayedAvailableTableColumns = [
+      'image',
+      'brand',
+      'name',
+      'qty',
+      'weight',
+      'regularPrice',
+      'superPrice',
+    ];
+    this.displayedUnavailableTableColumns = ['name', 'qty'];
   }
 
   onSubmit(): void {

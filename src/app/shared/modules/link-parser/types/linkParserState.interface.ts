@@ -4,5 +4,5 @@ import { IProduct } from './product.interface';
 export interface ILinkParserState {
   isSubmitting: boolean;
   errors: IApiErrors | null;
-  products: IProduct[] | null;
+  products: IProduct[];
 }

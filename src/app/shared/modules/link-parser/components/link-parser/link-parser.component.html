@@ -1,31 +1,126 @@
-<div class="linkParserWrapper">
-  <app-api-error-messages *ngIf="apiErrors$ | async">
-    [apiErrors]="apiErrors$ | async" ></app-api-error-messages
-  >
-  <mat-form-field class="linkParser" appearance="fill">
-    <mat-label>Ссылка на корзину или товар</mat-label>
-    <input
-      [readonly]="(isSubmitting$ | async) || false"
-      type="text"
-      [formControl]="link"
-      matInput
-      placeholder="https://iherb.com/..."
-    />
-    <mat-error>Введите корректную ссылку</mat-error>
-  </mat-form-field>
-
-  <button
-    [disabled]="(isSubmitting$ | async) || !link.valid"
-    (click)="onSubmit()"
-    mat-button
-    color="primary"
-    aria-label="search"
-  >
-    <mat-icon *ngIf="!(isSubmitting$ | async); else spinner" aria-hidden="true"
-      >search</mat-icon
+<div class="wrapper">
+  <div class="inputWrapper">
+    <app-api-error-messages *ngIf="apiErrors$ | async">
+      [apiErrors]="apiErrors$ | async" ></app-api-error-messages
     >
-    <ng-template #spinner
-      ><mat-spinner diameter="32"></mat-spinner
-    ></ng-template>
-  </button>
+    <mat-form-field class="input" appearance="fill">
+      <mat-label>Ссылка на корзину или товар</mat-label>
+      <input
+        [readonly]="(isSubmitting$ | async) || false"
+        type="text"
+        [formControl]="link"
+        matInput
+        placeholder="https://iherb.com/..."
+      />
+      <mat-error>Введите корректную ссылку</mat-error>
+    </mat-form-field>
+
+    <button
+      [disabled]="(isSubmitting$ | async) || !link.valid"
+      (click)="onSubmit()"
+      mat-button
+      color="primary"
+      aria-label="search"
+    >
+      <mat-icon
+        *ngIf="!(isSubmitting$ | async); else spinner"
+        aria-hidden="true"
+        >search</mat-icon
+      >
+      <ng-template #spinner
+        ><mat-spinner diameter="32"></mat-spinner
+      ></ng-template>
+    </button>
+  </div>
+
+  <table
+    *ngIf="availableProducts?.length"
+    mat-table
+    [dataSource]="availableProducts"
+  >
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <img src="{{ row.imageLink }}" alt="product image" />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="brand">
+      <th mat-header-cell *matHeaderCellDef>Брэнд</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.brand }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Продукт</th>
+      <td mat-cell *matCellDef="let row">
+        <a href="{{ row.link }}" target="_blank">
+          {{ row.name }}
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="qty">
+      <th mat-header-cell *matHeaderCellDef>Кол-во</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.qty }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Вес, Кг</th>
+      <td mat-cell *matCellDef="let row">{{ row.weight }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="regularPrice">
+      <th mat-header-cell *matHeaderCellDef>Цена, Br</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.regularPrice / 100 }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="superPrice">
+      <th mat-header-cell *matHeaderCellDef>Супер Цена, Br</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.superPrice ? row.superPrice / 100 : '' }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedAvailableTableColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedAvailableTableColumns"
+    ></tr>
+  </table>
+
+  <ng-container *ngIf="unavailableProducts?.length">
+    <p>Позиции, не доступные для заказа:</p>
+    <table mat-table [dataSource]="unavailableProducts">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Продукт</th>
+        <td mat-cell *matCellDef="let row">
+          <a href="{{ row.link }}" target="_blank">
+            {{ row.name }}
+          </a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="qty">
+        <th mat-header-cell *matHeaderCellDef>Кол-во</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.qty }}
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedUnavailableTableColumns"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedUnavailableTableColumns"
+      ></tr>
+    </table>
+  </ng-container>
 </div>
