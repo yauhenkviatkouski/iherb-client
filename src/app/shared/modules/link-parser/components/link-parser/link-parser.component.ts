@@ -65,6 +65,8 @@ export class LinkParserComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.availableProducts = [];
+    this.unavailableProducts = [];
     this.store.dispatch(
       parseLinkAction({ request: { link: this.link.value } }),
     );
@@ -75,7 +77,7 @@ export class LinkParserComponent implements OnInit {
       this.availableProducts.map((product) => ({
         brand: product.brand,
         name: product.name.trim(),
-        qty: product.qty,
+        qty: product.qty || '-',
         weight: product.weight,
         regularPrice: product.regularPrice! / 100,
         superPrice: product.superPrice ? product.superPrice / 100 : '',

@@ -15,7 +15,7 @@ export class UtilsService {
       useTextFile: false,
       useBom: true,
       // useKeysAsHeaders: true,
-      headers: ['Брэнд', 'Продукт', 'Кол-во', 'Вес', 'Цена', 'Супер цена'],
+      headers: ['Бренд', 'Продукт', 'Кол-во', 'Вес', 'Цена', 'Супер цена'],
     };
 
     new ExportToCsv(options).generateCsv(rows);
