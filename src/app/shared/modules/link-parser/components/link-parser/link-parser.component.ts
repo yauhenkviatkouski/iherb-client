@@ -64,9 +64,18 @@ export class LinkParserComponent implements OnInit {
     this.displayedUnavailableTableColumns = ['name', 'qty'];
   }
 
-  onSubmit(): void {
+  clearProducts() {
     this.availableProducts = [];
     this.unavailableProducts = [];
+  }
+
+  onClearClick() {
+    this.link.setValue('');
+    this.clearProducts();
+  }
+
+  onSubmit(): void {
+    this.clearProducts();
     this.store.dispatch(
       parseLinkAction({ request: { link: this.link.value } }),
     );

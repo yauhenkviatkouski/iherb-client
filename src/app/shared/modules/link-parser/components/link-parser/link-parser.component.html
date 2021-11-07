@@ -14,9 +14,13 @@
       />
       <mat-error>Введите корректную ссылку</mat-error>
     </mat-form-field>
-
     <button
-      [disabled]="(isSubmitting$ | async) || !link.valid"
+      [disabled]="
+        (isSubmitting$ | async) ||
+        !link.valid ||
+        !!availableProducts.length ||
+        !!unavailableProducts.length
+      "
       (click)="onSubmit()"
       mat-button
       color="primary"
@@ -39,6 +43,15 @@
       aria-label="search"
     >
       <mat-icon aria-hidden="true">download</mat-icon>
+    </button>
+    <button
+      [disabled]="!link.value || (isSubmitting$ | async)"
+      (click)="onClearClick()"
+      mat-button
+      color="primary"
+      aria-label="search"
+    >
+      <mat-icon aria-hidden="true">delete</mat-icon>
     </button>
   </div>
 
