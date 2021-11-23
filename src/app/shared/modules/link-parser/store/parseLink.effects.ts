@@ -1,8 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { switchMap, catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import {
+  switchMap,
+  catchError,
+  map,
+  retryWhen,
+  delay,
+  mergeMap,
+  shareReplay,
+} from 'rxjs/operators';
 import { LinkParserService } from '../services/linkParser.service';
 import {
   parseLinkAction,
@@ -16,14 +24,14 @@ export class LinkParserEffect {
     this.actions$.pipe(
       ofType(parseLinkAction),
       switchMap(({ request }) =>
-        this.linkParserService
-          .parse(request.link)
-          .pipe(
-            map((products) => parseLinkSuccessAction({ products: products })),
+        this.linkParserService.parse(request.link).pipe(
+          delayedRetry(500, 3),
+          map((products) => parseLinkSuccessAction({ products })),
+          catchError((errorResponse: HttpErrorResponse) =>
+            of(parseLinkFailureAction({ error: errorResponse.error })),
           ),
-      ),
-      catchError((errorResponse: HttpErrorResponse) =>
-        of(parseLinkFailureAction(errorResponse.error.errors)),
+          shareReplay(),
+        ),
       ),
     ),
   );
@@ -32,4 +40,19 @@ export class LinkParserEffect {
     private actions$: Actions,
     private linkParserService: LinkParserService,
   ) {}
+}
+
+function delayedRetry(delayMs: number, retryTimes: number) {
+  let attempts = 0;
+  return (scr: Observable<any>) =>
+    scr.pipe(
+      retryWhen((errors) =>
+        errors.pipe(
+          delay(delayMs),
+          mergeMap((error) =>
+            attempts++ === retryTimes ? throwError(error) : of(error),
+          ),
+        ),
+      ),
+    );
 }

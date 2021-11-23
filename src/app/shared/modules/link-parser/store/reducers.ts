@@ -19,7 +19,6 @@ const parseLinkReducer = createReducer(
     (state): ILinkParserState => ({
       ...state,
       isSubmitting: true,
-      errors: null,
     }),
   ),
   on(
@@ -31,15 +30,14 @@ const parseLinkReducer = createReducer(
       products: action.products,
     }),
   ),
-  on(
-    parseLinkFailureAction,
-    (state, action): ILinkParserState => ({
+  on(parseLinkFailureAction, (state, action): ILinkParserState => {
+    console.log(action);
+    return {
       ...state,
       isSubmitting: false,
-      errors: action.errors,
-      products: [],
-    }),
-  ),
+      errors: action.error,
+    };
+  }),
 );
 
 export function reducer(state: ILinkParserState, action: Action) {

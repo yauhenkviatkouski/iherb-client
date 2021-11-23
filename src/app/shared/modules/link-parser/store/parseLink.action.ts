@@ -16,5 +16,5 @@ export const parseLinkSuccessAction = createAction(
 
 export const parseLinkFailureAction = createAction(
   ActionTypes.PARSE_LINK_FAILURE,
-  props<{ errors: IApiErrors }>(),
+  props<{ error: IApiErrors }>(),
 );

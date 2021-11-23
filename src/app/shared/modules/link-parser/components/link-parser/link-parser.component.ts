@@ -36,7 +36,7 @@ export class LinkParserComponent implements OnInit {
   initializeForm(): void {
     this.link = new FormControl('', [
       Validators.required,
-      Validators.pattern(/.+iherb.com/),
+      // Validators.pattern(/.+iherb.com/),
     ]);
   }
 

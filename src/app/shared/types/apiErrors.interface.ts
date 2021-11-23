@@ -1,3 +1,3 @@
 export interface IApiErrors {
-  [key: string]: string;
+  [key: string]: any;
 }
