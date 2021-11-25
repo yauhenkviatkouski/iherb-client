@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { apiErrorsSelector } from 'src/app/auth/store/selectors';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { IApiErrors } from 'src/app/shared/types/apiErrors.interface';
 import { IAppState } from 'src/app/shared/types/appState.interface';
 import { parseLinkAction } from '../../store/parseLink.action';
-import { isSubmittingSelector, productsSelector } from '../../store/selectors';
+import {
+  errorsSelector,
+  isSubmittingSelector,
+  productsSelector,
+} from '../../store/selectors';
 import { IProduct } from '../../types/product.interface';
 
 @Component({
@@ -21,6 +24,7 @@ export class LinkParserComponent implements OnInit {
   displayedUnavailableTableColumns: string[];
   availableProducts: IProduct[];
   unavailableProducts: IProduct[];
+  errorMessage: string;
 
   apiErrors$: Observable<IApiErrors | null>;
   isSubmitting$: Observable<boolean>;
@@ -36,14 +40,19 @@ export class LinkParserComponent implements OnInit {
   initializeForm(): void {
     this.link = new FormControl('', [
       Validators.required,
-      // Validators.pattern(/.+iherb.com/),
+      Validators.pattern(/.+iherb.com/),
     ]);
   }
 
   initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.apiErrors$ = this.store.pipe(select(apiErrorsSelector));
+    this.apiErrors$ = this.store.pipe(select(errorsSelector));
     this.products$ = this.store.pipe(select(productsSelector));
+    this.apiErrors$.subscribe((errors) => {
+      if (errors) {
+        this.errorMessage = 'Что-то пошло не так ¯\\_(ツ)_/¯';
+      }
+    });
     this.products$.subscribe((products) => {
       this.availableProducts = products.filter(
         (product) => !product.isNotAvailable,
@@ -72,6 +81,7 @@ export class LinkParserComponent implements OnInit {
   onClearClick() {
     this.link.setValue('');
     this.clearProducts();
+    this.errorMessage = '';
   }
 
   onSubmit(): void {

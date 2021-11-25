@@ -1,8 +1,6 @@
 <div class="wrapper">
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
   <div class="inputWrapper">
-    <app-api-error-messages *ngIf="apiErrors$ | async">
-      [apiErrors]="apiErrors$ | async" ></app-api-error-messages
-    >
     <mat-form-field class="input" appearance="fill">
       <mat-label>Ссылка на корзину или товар</mat-label>
       <input
