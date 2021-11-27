@@ -25,7 +25,7 @@ export class LinkParserEffect {
       ofType(parseLinkAction),
       switchMap(({ request }) =>
         this.linkParserService.parse(request.link).pipe(
-          delayedRetry(500, 3),
+          delayedRetry(1500, 3),
           map((products) => parseLinkSuccessAction({ products })),
           catchError((errorResponse: HttpErrorResponse) =>
             of(parseLinkFailureAction({ error: errorResponse.error })),
