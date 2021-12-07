@@ -115,7 +115,7 @@
   </table>
 
   <ng-container *ngIf="unavailableProducts?.length">
-    <p><b>Внимание:</b> следующие позиции не доступны для заказа:</p>
+    <p><b>Внимание:</b> следующие позиции недоступны для заказа:</p>
     <table mat-table [dataSource]="unavailableProducts">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Продукт</th>
